@@ -38,6 +38,14 @@
 		    <version>${mysql-connector.version}</version>
 		</dependency>
 	    <!-- 配置Spring Boot和Spring Data JPA结合依赖关系[END] -->
+	    
+	    <!-- 配置MySQL连接驱动依赖关系[BEGIN] -->
+		<dependency>
+		    <groupId>mysql</groupId>
+		    <artifactId>mysql-connector-java</artifactId>
+		    <version>${mysql-connector.version}</version>
+		</dependency>
+	    <!-- 配置MySQL连接驱动依赖关系[END] -->
   	
     	<dependency>
       		<groupId>junit</groupId>

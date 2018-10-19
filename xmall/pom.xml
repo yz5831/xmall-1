@@ -15,6 +15,7 @@
     	<maven.compiler.source>1.8</maven.compiler.source>
     	<maven.compiler.target>1.8</maven.compiler.target>
     	<xmall.version>0.0.1-SNAPSHOT</xmall.version>
+    	<shiro-spring.version>1.4.0</shiro-spring.version>
   	</properties>
 
   	<dependencies>
@@ -25,6 +26,41 @@
   			<version>${xmall.version}</version>
   		</dependency>
   		<!-- 配置XMALL项目依赖关系[END] -->
+  		
+  		<!-- 配置Shiro和Spring Boot结合的依赖关系[BEGIN] -->
+		<dependency>
+		    <groupId>org.apache.shiro</groupId>
+		    <artifactId>shiro-spring</artifactId>
+		    <version>${shiro-spring.version}</version>
+		</dependency>
+  		<!-- 配置Shiro和Spring Boot结合的依赖关系[END] -->
+  		
+  		<!-- 当使用内置Tomcat的时候，需要对于JSP进行支持[BEGIN] -->
+		<dependency>
+		    <groupId>org.apache.tomcat.embed</groupId>
+		    <artifactId>tomcat-embed-jasper</artifactId>
+		    <version>8.5.32</version>
+		</dependency>
+    	<!-- 当使用内置Tomcat的时候，需要对于JSP进行支持[END] -->
+    	
+    	<dependency>
+		    <groupId>jstl</groupId>
+		    <artifactId>jstl</artifactId>
+		    <version>1.2</version>
+		</dependency>
+		<dependency>
+		    <groupId>javax.servlet</groupId>
+		    <artifactId>servlet-api</artifactId>
+		    <version>2.5</version>
+		    <scope>provided</scope>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-devtools</artifactId>
+		    <optional>true</optional>
+		    <version>2.0.4.RELEASE</version>
+		</dependency>
   	
     	<dependency>
       		<groupId>junit</groupId>
