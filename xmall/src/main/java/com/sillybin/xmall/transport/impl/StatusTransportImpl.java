@@ -1,5 +1,7 @@
 package com.sillybin.xmall.transport.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Component;
@@ -14,5 +16,9 @@ public class StatusTransportImpl implements StatusTransport {
 
 	public Status getStatusByStatusCode(String statusCode) throws Exception {
 		return statusService.getStatusByStatusCode(statusCode);
+	}
+
+	public List<Status> getStatusListByParentCode(String statusCode) throws Exception {
+		return statusService.getStatusListByParentCode(statusCode);
 	}
 }

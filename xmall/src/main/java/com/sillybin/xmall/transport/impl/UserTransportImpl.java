@@ -29,4 +29,12 @@ public class UserTransportImpl implements UserTransport {
 	public boolean updateUser(User user) throws Exception {
 		return userService.updateUser(user);
 	}
+
+	public User getLastUser() throws Exception {
+		return userService.getLastUser();
+	}
+
+	public boolean saveUser(User user) throws Exception {
+		return userService.saveUser(user);
+	}
 }

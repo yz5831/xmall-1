@@ -11,4 +11,6 @@ public interface UserDao extends BaseDao<User, Long> {
 	public User findUserByLoginName(@Param("loginName")String loginName) throws Exception;
 	@Query("from User u where u.userId=:userId")
 	public User findUserByUserId(@Param("userId")Long userId) throws Exception;
+	@Query("from User u order by u.userId DESC")
+	public User findUserListDESC() throws Exception;
 }

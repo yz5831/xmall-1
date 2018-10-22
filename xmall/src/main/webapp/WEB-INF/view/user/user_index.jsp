@@ -165,6 +165,15 @@
 					}
 				});
 			}
+			
+			function openAddModal() {
+				// 设定title内容
+				var title = "<i class='fa fa-plus'></i>&nbsp;新增用户信息";
+				var url = "<%=request.getContextPath()%>/user/create";
+				var width = "600px";
+				var height = "800px";
+				parent.showModal(title, url, width, height);
+			}
 		</script>
 	</head>
 	<body>
@@ -184,7 +193,7 @@
    	 											<div class="container-fluid">
     												<div>
         												<form class="navbar-form navbar-left" role="search">
-            												<a href="javascript:openAddCategoryModal()" class="btn btn-primary">
+            												<a href="javascript:openAddModal()" class="btn btn-primary">
             													<i class="fa fa-plus"></i>
             													&nbsp;新增用户信息
             												</a>

@@ -23,6 +23,23 @@
 				var iframe="<iframe onscroll='true' src='" + url + "' style='width: 100%; height: 100%; min-height:  424px; border: 0px;'></iframe>";
 				$("#myframe").html(iframe);
 			}
+			
+			function showModal(title, url, width, height) {
+				// 设定模态框标题
+				$("#myModalTitile").html(title);
+				// 设定url
+				var iframe = "<iframe onscroll='true' src='" + url + "' style='width: " + width + "; height: " + height + "; min-height:  424px; border: 0px;'></iframe>";
+				// 设定模态框具体内容
+				$("#myModalBody").html(iframe);
+				// 展示模态框
+				$("#myModal").modal({
+					keyboard: false
+				});
+			}
+			
+			function closeModal() {
+				$("#myModal").modal("hide");
+			}
 		</script>
 	</head>
 	<body class="hold-transition skin-blue sidebar-mini">
@@ -94,6 +111,18 @@
     			reserved.
   			</footer>
   			<div class="control-sidebar-bg"></div>
+		</div>
+		
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    		<div class="modal-dialog">
+        		<div class="modal-content">
+            		<div class="modal-header">
+                		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                		<h4 class="modal-title" id="myModalTitile"></h4>
+            		</div>
+            		<div class="modal-body" id="myModalBody"></div>
+        		</div>
+    		</div>
 		</div>
 	</body>
 </html>

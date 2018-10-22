@@ -1,5 +1,7 @@
 package com.sillybin.xmall.service.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -57,6 +59,19 @@ public class UserServiceImpl implements UserService {
 	public boolean updateUser(User user) throws Exception {
 		User updateUser = userDao.save(user);
 		if (user.getStatus().getStatusId() != updateUser.getStatus().getStatusId()) {
+			return true;
+		}
+		return false;
+	}
+
+	public User getLastUser() throws Exception {
+		User user = userDao.findUserListDESC();
+		return user;
+	}
+
+	public boolean saveUser(User user) throws Exception {
+		User saveUser = userDao.save(user);
+		if (saveUser.getUserId() != null) {
 			return true;
 		}
 		return false;

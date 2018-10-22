@@ -1,5 +1,7 @@
 package com.sillybin.xmall.service.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
 
@@ -17,5 +19,10 @@ public class StatusServiceImpl implements StatusService {
 
 	public Status getStatusByStatusCode(String statusCode) throws Exception {
 		return statusDao.findStatusByStatusCode(statusCode);
+	}
+
+	public List<Status> getStatusListByParentCode(String statusCode) throws Exception {
+		List<Status> statusList = statusDao.findStatusByParentCode(statusCode);
+		return statusList;
 	}
 }

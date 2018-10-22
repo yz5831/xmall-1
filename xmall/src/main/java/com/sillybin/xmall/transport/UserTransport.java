@@ -8,4 +8,6 @@ public interface UserTransport {
 	public XmallPage<User> getUserListByPage(XmallPage<User> xmallPage, String username) throws Exception;
 	public User getUserByUserId(Long userId) throws Exception;
 	public boolean updateUser(User user) throws Exception;
+	public User getLastUser() throws Exception;
+	public boolean saveUser(User user) throws Exception;
 }

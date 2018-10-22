@@ -1,6 +1,8 @@
 package com.sillybin.xmall.controller;
 
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -13,11 +15,15 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.sillybin.xmall.controller.base.BaseController;
+import com.sillybin.xmall.pojo.entity.Role;
 import com.sillybin.xmall.pojo.entity.Status;
 import com.sillybin.xmall.pojo.entity.User;
 import com.sillybin.xmall.pojo.vo.XmallPage;
+import com.sillybin.xmall.transport.RoleTransport;
 import com.sillybin.xmall.transport.StatusTransport;
 import com.sillybin.xmall.transport.UserTransport;
+import com.sillybin.xmall.util.ConstantUtil;
+import com.sillybin.xmall.util.UserUtil;
 @Controller("userController")
 @RequestMapping("/user")
 public class UserController extends BaseController {
@@ -25,6 +31,8 @@ public class UserController extends BaseController {
 	private UserTransport userTransport;
 	@Resource(name="statusTransport")
 	private StatusTransport statusTransport;
+	@Resource(name="roleTransport")
+	private RoleTransport roleTransport;
 	
 	@RequestMapping(value="/login", method=RequestMethod.GET)
 	public String getUserLoginForm() throws Exception {
@@ -69,5 +77,45 @@ public class UserController extends BaseController {
 		
 		user.setStatus(status);
 		return userTransport.updateUser(user);
+	}
+	
+	@RequestMapping(value="/create", method=RequestMethod.GET)
+	public ModelAndView getUserAddForm() throws Exception {
+		// 按照用户主键降序排列，获得最后一个用户
+		User lastUser = userTransport.getLastUser();
+		String userNo = "";
+		if (lastUser == null) {
+			userNo = UserUtil.createUserNo(1l);
+		} else {
+			userNo = UserUtil.createUserNo(lastUser.getUserId() + 1);
+		}
+		// 获得所有的可用角色列表
+		List<Role> roleList = roleTransport.getRoleAllList();
+		// 封装结果，进行转发
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("userNo", userNo);
+		resultMap.put("roleList", roleList);
+		
+		return new ModelAndView("user/user_create", resultMap);
+	}
+	
+	@RequestMapping(value="/create", method=RequestMethod.POST)
+	@ResponseBody
+	public boolean saveUser(User user, Long roleId) throws Exception {
+		// 根据角色主键获得角色信息
+		Role role = roleTransport.getRoleByRoleId(roleId);
+		user.setRole(role);
+		// 设定用户默认为启用状态
+		user.setStatus(statusTransport.getStatusByStatusCode(ConstantUtil.STATUS_ENABLE));
+		// 判断是否填写的身份证号码
+		if (user.getIdCard() != null && !"".equals(user.getIdCard().trim())) {
+			// 根据身份证号码切割生日
+			user.setBirthday(UserUtil.parseBirthday(user.getIdCard()));
+		}
+		// 设定创建人和创建时间
+		user.setCreateUser((User) session.getAttribute("user"));
+		user.setCreateTime(new Date());
+		// 保存用户信息
+		return userTransport.saveUser(user);
 	}
 }
