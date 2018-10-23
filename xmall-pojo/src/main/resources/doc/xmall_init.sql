@@ -78,7 +78,7 @@ insert into sys_menu(parent_id, text, url, icon, sort_order, status_id, create_t
 insert into sys_menu(parent_id, text, url, icon, sort_order, status_id, create_time, update_time) values(2, '地址管理', '', '', 21, 2, current_timestamp, current_timestamp);
 insert into sys_menu(parent_id, text, url, icon, sort_order, status_id, create_time, update_time) values(2, '支付方式', '', '', 22, 2, current_timestamp, current_timestamp);
 insert into sys_menu(parent_id, text, url, icon, sort_order, status_id, create_time, update_time) values(2, '积分等级', '', '', 23, 2, current_timestamp, current_timestamp);
-insert into sys_menu(parent_id, text, url, icon, sort_order, status_id, create_time, update_time) values(3, '商品类别', '', '', 31, 2, current_timestamp, current_timestamp);
+insert into sys_menu(parent_id, text, url, icon, sort_order, status_id, create_time, update_time) values(3, '商品类别', '/category/index', 'fa fa-bars', 31, 2, current_timestamp, current_timestamp);
 insert into sys_menu(parent_id, text, url, icon, sort_order, status_id, create_time, update_time) values(3, '商品属性', '', '', 32, 2, current_timestamp, current_timestamp);
 insert into sys_menu(parent_id, text, url, icon, sort_order, status_id, create_time, update_time) values(3, '商品属性值', '', '', 33, 2, current_timestamp, current_timestamp);
 insert into sys_menu(parent_id, text, url, icon, sort_order, status_id, create_time, update_time) values(3, '商品信息', '', '', 34, 2, current_timestamp, current_timestamp);

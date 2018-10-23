@@ -27,8 +27,9 @@
 			function showModal(title, url, width, height) {
 				// 设定模态框标题
 				$("#myModalTitile").html(title);
+				$("#modalContent").css("width", width);
 				// 设定url
-				var iframe = "<iframe onscroll='true' src='" + url + "' style='width: " + width + "; height: " + height + "; min-height:  424px; border: 0px;'></iframe>";
+				var iframe = "<iframe onscroll='true' src='" + url + "' style='width: 100%; height: " + height + "; min-height:  424px; border: 0px;'></iframe>";
 				// 设定模态框具体内容
 				$("#myModalBody").html(iframe);
 				// 展示模态框
@@ -115,7 +116,7 @@
 		
 		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     		<div class="modal-dialog">
-        		<div class="modal-content">
+        		<div class="modal-content" id="modalContent">
             		<div class="modal-header">
                 		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 		<h4 class="modal-title" id="myModalTitile"></h4>

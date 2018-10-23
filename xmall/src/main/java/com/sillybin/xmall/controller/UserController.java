@@ -76,19 +76,14 @@ public class UserController extends BaseController {
 		Status status = statusTransport.getStatusByStatusCode(statusCode);
 		
 		user.setStatus(status);
-		return userTransport.updateUser(user);
+		return userTransport.saveOrUpdateUser(user);
 	}
 	
 	@RequestMapping(value="/create", method=RequestMethod.GET)
 	public ModelAndView getUserAddForm() throws Exception {
-		// 按照用户主键降序排列，获得最后一个用户
-		User lastUser = userTransport.getLastUser();
-		String userNo = "";
-		if (lastUser == null) {
-			userNo = UserUtil.createUserNo(1l);
-		} else {
-			userNo = UserUtil.createUserNo(lastUser.getUserId() + 1);
-		}
+		// 获得此时用户列表中的最大用户主键
+		User maxUser = userTransport.getMaxUser();
+		String userNo = UserUtil.createUserNo(String.valueOf(maxUser.getUserId() + 1));
 		// 获得所有的可用角色列表
 		List<Role> roleList = roleTransport.getRoleAllList();
 		// 封装结果，进行转发
@@ -99,6 +94,13 @@ public class UserController extends BaseController {
 		return new ModelAndView("user/user_create", resultMap);
 	}
 	
+	/**
+	 * 异步保存用户信息
+	 * @param user
+	 * @param roleId
+	 * @return boolean
+	 * @throws Exception
+	 */
 	@RequestMapping(value="/create", method=RequestMethod.POST)
 	@ResponseBody
 	public boolean saveUser(User user, Long roleId) throws Exception {
@@ -112,10 +114,10 @@ public class UserController extends BaseController {
 			// 根据身份证号码切割生日
 			user.setBirthday(UserUtil.parseBirthday(user.getIdCard()));
 		}
-		// 设定创建人和创建时间
-		user.setCreateUser((User) session.getAttribute("user"));
+		// 获得当前登录用户，并且变为持久太对象
+		user.setCreateUser(userTransport.getUserByUserId(((User) session.getAttribute("user")).getUserId()));
 		user.setCreateTime(new Date());
 		// 保存用户信息
-		return userTransport.saveUser(user);
+		return userTransport.saveOrUpdateUser(user);
 	}
 }

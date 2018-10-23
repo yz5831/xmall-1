@@ -2,18 +2,19 @@ package com.sillybin.xmall.util;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.annotation.Resource;
+import com.sillybin.xmall.transport.UserTransport;
 
 public class UserUtil {
-	public static String createUserNo(Long no) {
-		String prefix = "ZH";
-		// 查询所有的对象信息，按照主键由大到小排序，获取第一个
-		String noStr = String.valueOf(no);
-		if (noStr.length() < 5) {
-			while (noStr.length() < 5) {
-				noStr = "0" + noStr;
-			}
+	@Resource(name="userTransport")
+	private UserTransport userTransport;
+	
+	
+	public static String createUserNo(String no) {
+		while (no.length() < 5) {
+			no = "0" + no;
 		}
-		return prefix + noStr;
+		return "AUG" + no;
 	}
 
 	public static Date parseBirthday(String idCard) throws Exception {

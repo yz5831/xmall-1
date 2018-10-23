@@ -72,7 +72,7 @@
 						登录名：
 					</td>
 					<td>
-						<input type="text" id="loginName" name="loginName" class="form-control" style="width: 220px;" placeholder="请填写登录名"/>
+						<input type="text" id="loginName" name="loginName" onblur="checkLoginName();" class="form-control" style="width: 220px;" placeholder="请填写登录名"/>
 					</td>
 					<td style="padding-left: 5px;">
 						<span style="color: red;">*</span>

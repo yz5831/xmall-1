@@ -12,6 +12,7 @@ import javax.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -32,7 +33,7 @@ public class UserServiceImpl implements UserService {
 	public XmallPage<User> getUserListByPage(XmallPage<User> xmallPage, String username) throws Exception {
 		// 设定分页对象
 		Pageable pageable = PageRequest.of(xmallPage.getPageNum() - 1, xmallPage.getPageSize(), 
-				Direction.ASC, "createTime");
+				Direction.ASC, "userId");
 		Page<User> page = null;
 		if (username != null) {
 			page = userDao.findAll(new Specification<User>() {
@@ -53,27 +54,29 @@ public class UserServiceImpl implements UserService {
 	}
 
 	public User getUserByUserId(Long userId) throws Exception {
-		return userDao.findUserByUserId(userId);
-	}
-
-	public boolean updateUser(User user) throws Exception {
-		User updateUser = userDao.save(user);
-		if (user.getStatus().getStatusId() != updateUser.getStatus().getStatusId()) {
-			return true;
-		}
-		return false;
+		return userDao.findById(userId).get();
 	}
 
 	public User getLastUser() throws Exception {
-		User user = userDao.findUserListDESC();
-		return user;
-	}
-
-	public boolean saveUser(User user) throws Exception {
-		User saveUser = userDao.save(user);
-		if (saveUser.getUserId() != null) {
-			return true;
+		List<User> userList = userDao.findAll(new Sort(Direction.DESC, "userId"));
+		if (userList != null && userList.size() > 0) {
+			return userList.get(0);
 		}
-		return false;
+		return null;
+	}
+	
+	/**
+	 * 保存/更新用户信息
+	 * @param user 带保存/更新用户对象
+	 * @return boolean true-保存或者更新用户成功，false-保存或者更新用户失败
+	 * @throws Exception
+	 */
+	public boolean saveOrUpdateUser(User user) throws Exception {
+		try {
+			userDao.save(user);
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
 	}
 }

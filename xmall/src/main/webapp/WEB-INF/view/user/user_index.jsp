@@ -88,7 +88,6 @@
 						{"data": "idCard"},
 						{"data": "cellphone"},
 						{"data": "email"},
-						{"data": "birthday"},
 						{"data": "status.statusCode"},
 						{"data": "operation"}
 					],
@@ -117,7 +116,19 @@
 						}
 					}, {
 						// 处理为null情况
-						"targets": 10,			// 对应单元格的下表
+						"targets": 5,			// 对应单元格的下表
+						"render": function(data, type, row, meta) {
+							// 如果父类为null则会报错
+							var role = row.role;
+							if (role == null) {
+								return "";
+							} else {
+								return row.role.roleName;
+							}
+						}
+					}, {
+						// 处理为null情况
+						"targets": 9,			// 对应单元格的下表
 						"render": function(data, type, row, meta) {
 							// 如果父类为null则会报错
 							var statusCode = row.status.statusCode;
@@ -129,7 +140,7 @@
 						}
 					}, {
 						// 处理最后的按钮
-						"targets": 11,
+						"targets": 10,
 						"render": function(data, type, row, meta) {
 							var btns = "";
 							var updateBtn = "<a href='#' class='btn btn-warning btn-xs'><i class='fa fa-wrench'></i>&nbsp;修改</a>";
@@ -171,7 +182,7 @@
 				var title = "<i class='fa fa-plus'></i>&nbsp;新增用户信息";
 				var url = "<%=request.getContextPath()%>/user/create";
 				var width = "600px";
-				var height = "800px";
+				var height = "400px";
 				parent.showModal(title, url, width, height);
 			}
 		</script>
@@ -188,7 +199,7 @@
               				<table id="usertable" class="table table-bordered table-hover">
               					<thead>
               						<tr>
-              							<td colspan="12">
+              							<td colspan="11">
               								<nav class="navbar navbar-default" role="navigation" style="margin: 0px;">
    	 											<div class="container-fluid">
     												<div>
@@ -224,7 +235,6 @@
                 						<th>身份证号码</th>
                 						<th>联系电话</th>
                 						<th>电子邮件</th>
-                						<th>出生日期</th>
                 						<th>状态</th>
                 						<th>操作</th>
                 					</tr>
