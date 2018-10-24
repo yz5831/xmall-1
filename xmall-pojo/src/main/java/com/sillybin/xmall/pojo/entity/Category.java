@@ -17,6 +17,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="sys_category")
 public class Category implements Serializable {
@@ -26,9 +28,12 @@ public class Category implements Serializable {
 	private String text;
 	private Status status;
 	private Integer sortOrder;
+	@JsonIgnore
 	private List<Category> categoryList;
+	@JsonIgnore
 	private User createUser;
 	private Date createTime;
+	@JsonIgnore
 	private User updateUser;
 	private Date updateTime;
 	
