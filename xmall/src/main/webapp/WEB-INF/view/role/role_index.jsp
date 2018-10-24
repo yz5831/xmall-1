@@ -109,7 +109,7 @@
 						"targets": 5,			// 对应单元格的下表
 						"render": function(data, type, row, meta) {
 							var authcBtn = "<a href='#' class='btn btn-primary btn-xs'><i class='fa fa-gavel'></i>&nbsp;授权</a>";
-							var updateBtn = "<a href='#' class='btn btn-warning btn-xs'><i class='fa fa-wrench'></i>&nbsp;修改</a>"
+							var updateBtn = "<a href='javascript:openupdatemodel(\"" + row.roleId + "\")' class='btn btn-warning btn-xs'><i class='fa fa-wrench'></i>&nbsp;修改</a>"
 							// 判断状态按钮
 							var statusBtn = "";
 							if (row.status != null && row.status.statusCode == "ENABLE") {
@@ -187,12 +187,20 @@
 				var height = "300px";
 				parent.showModal(title, url, width, height);
 			}
+			
+			function openupdatemodel(roleId) {
+				var title = "<i class='fa fa-plus'></i>&nbsp;修改后台角色信息";
+				var url = "<%=request.getContextPath()%>/role/update/" + roleId;
+				var width = "600px";
+				var height = "300px";
+				parent.showModal(title, url, width, height);
+			}
 		</script>
 	</head>
 	<body>
 		<section class="content-header">
       		<h1>
-      			<i class="fa fa fa-user-secret"></i>&nbsp;
+      			<i class="fa fa-user-secret"></i>&nbsp;
       			后台角色信息管理
       		</h1>
     	</section>

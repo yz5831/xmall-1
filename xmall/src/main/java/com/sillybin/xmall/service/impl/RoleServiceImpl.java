@@ -117,4 +117,24 @@ public class RoleServiceImpl implements RoleService {
 	public Role getRoleByRoleCode(String roleCode) throws Exception {
 		return roleDao.findRoleByRoleCode(roleCode);
 	}
+
+	/**
+	 ** 保存角色信息
+	 * @param role
+	 * @param statusId
+	 * @return
+	 * @throws Exception
+	 */
+	public boolean saveOrUpdateRole(Role role, Long statusId) throws Exception {
+		// 根据statusId获得Status对象
+		Status status = statusDao.getOne(statusId);
+		role.setStatus(status);
+		try {
+			roleDao.save(role);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 }

@@ -41,4 +41,13 @@ public interface RoleService {
 	 * @throws Exception
 	 */
 	public Role getRoleByRoleCode(String roleCode) throws Exception;
+	
+	/**
+	 ** 保存角色信息
+	 * @param role
+	 * @param statusId
+	 * @return
+	 * @throws Exception
+	 */
+	public boolean saveOrUpdateRole(Role role, Long statusId) throws Exception;
 }

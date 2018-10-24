@@ -17,12 +17,14 @@
 			function checkRoleName() {
 				// 检查角色名称
 				var roleName = $("#roleName").val();
+				var roleId = $("#roleId").val();
 				if (roleName != null && roleName.trim() != "") {
 					// 异步校验
 					$.ajax({
 						"url": "<%=request.getContextPath()%>/role/checkRoleName",
 						"type": "get",
 						"data": {
+							"roleId": roleId,
 							"roleName": roleName
 						},
 						"dataType": "json",
@@ -51,12 +53,14 @@
 			
 			function checkRoleCode() {
 				var roleCode = $("#roleCode").val();
+				var roleId = $("#roleId").val();
 				if (roleCode != null && roleCode.trim() != "") {
 					// 异步校验
 					$.ajax({
 						"url": "<%=request.getContextPath()%>/role/checkRoleCode",
 						"type": "get",
 						"data": {
+							"roleId": roleId,
 							"roleCode": roleCode
 						},
 						"dataType": "json",
@@ -83,19 +87,19 @@
 				}
 			}
 			
-			function create() {
+			function save() {
 				// 使用异步的方式进行保存信息
-				var createform = $("#createform").serialize();
+				var updateform = $("#updateform").serialize();
 				$.ajax({
-					"url": "<%=request.getContextPath()%>/role/create",
-					"type": "post",
-					"data": createform,
+					"url": "<%=request.getContextPath()%>/role/update",
+					"type": "put",
+					"data": updateform,
 					"dataType": "json",
 					"success": function(data) {
 						if (data) {
-							alert("添加成功");
+							alert("修改成功");
 						} else {
-							alert("添加失败");
+							alert("修改失败");
 						}
 						// 重新刷新列表
 						parent.closeModal();
@@ -106,7 +110,7 @@
 		</script>
 	</head>
 	<body>
-		<form id="createform" role="form">
+		<form id="updateform" role="form">
 			<table style="border-collapse: separate; border-spacing: 0px 10px;">
 				<tr>
 					<td align="right">
@@ -114,7 +118,8 @@
 						角色名称：
 					</td>
 					<td>
-						<input type="text" id="roleName" name="roleName" onblur="checkRoleName();" class="form-control" style="width: 220px;" placeholder="请填写角色名称"/>
+						<input type="text" id="roleName" name="roleName" value="${role.roleName }" onblur="checkRoleName();" class="form-control" style="width: 220px;" placeholder="请填写角色名称"/>
+						<input type="hidden" id="roleId" name="roleId" value="${role.roleId }">
 					</td>
 					<td style="padding-left: 5px;">
 						<span style="color: red;">*</span>
@@ -128,7 +133,7 @@
 						角色编码：
 					</td>
 					<td>
-						<input type="text" id="roleCode" name="roleCode" onblur="checkRoleCode();" class="form-control" style="width: 220px;" placeholder="请填写角色编码"/>
+						<input type="text" id="roleCode" name="roleCode" value="${role.roleCode }" onblur="checkRoleCode();" class="form-control" style="width: 220px;" placeholder="请填写角色编码"/>
 					</td>
 					<td style="padding-left: 5px;">
 						<span style="color: red;">*</span>
@@ -145,7 +150,7 @@
 						<select id="statusId" name="statusId" class="form-control" style="width: 220px;">
 							<c:forEach var="status" items="${statusList }">
 								<c:choose>
-									<c:when test="${status.statusCode eq 'ENABLE' }">
+									<c:when test="${status.statusCode eq role.status.statusCode }">
 										<option value="${status.statusId }" selected>${status.statusName }</option>
 									</c:when>
 									<c:otherwise>
@@ -161,9 +166,9 @@
 				</tr>
 				<tr>
 					<td colspan="2" align="right">
-						<button id="subbtn" type="button" onclick="create();" class="btn btn-success" disabled="disabled">
+						<button id="subbtn" type="button" onclick="save();" class="btn btn-success" disabled="disabled">
 							<i class="fa fa-plus"></i>&nbsp;
-							添加角色信息
+							修改角色信息
 						</button>
 					</td>
 				</tr>

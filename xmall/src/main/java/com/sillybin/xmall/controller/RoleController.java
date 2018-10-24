@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -110,7 +111,7 @@ public class RoleController extends BaseController {
 	public boolean checkRoleName(Long roleId, String roleName) throws Exception {
 		// 根据角色名称查找角色对象
 		Role role = roleTransport.getRoleByRoleName(roleName);
-		if (role == null || (roleId != null && role.getRoleName().equals(roleName))) {
+		if (role == null || (roleId != null && role.getRoleId() == roleId)) {
 			return true;
 		} else {
 			return false;
@@ -122,10 +123,36 @@ public class RoleController extends BaseController {
 	public boolean checkRoleCode(Long roleId, String roleCode) throws Exception {
 		// 根据角色名称查找角色对象
 		Role role = roleTransport.getRoleByRoleCode(roleCode);
-		if (role == null || (roleId != null && role.getRoleCode().equals(roleCode))) {
+		if (role == null || (roleId != null && role.getRoleId() == roleId)) {
 			return true;
 		} else {
 			return false;
 		}
+	}
+	
+	@RequestMapping(value="/create", method=RequestMethod.POST)
+	@ResponseBody
+	public boolean createRole(Role role, Long statusId) throws Exception {
+		return roleTransport.saveOrUpdateRole(role, statusId);
+	}
+	
+	@RequestMapping(value="/update/{roleId}")
+	public ModelAndView getUpdateForm(@PathVariable("roleId")Long roleId) throws Exception {
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		// 根据roleId获得role对象
+		Role role = roleTransport.getRoleByRoleId(roleId);
+		// 获得所有可用状态列表
+		List<Status> statusList = statusTransport.getStatusListByParentCode(ConstantUtil.STATUS_ISABLE);
+		
+		resultMap.put("role", role);
+		resultMap.put("statusList", statusList);
+		
+		return new ModelAndView("role/role_update", resultMap);
+	}
+	
+	@RequestMapping(value="/update", method=RequestMethod.PUT)
+	@ResponseBody
+	public boolean updateRole(Role role, Long statusId) throws Exception {
+		return roleTransport.saveOrUpdateRole(role, statusId);
 	}
 }

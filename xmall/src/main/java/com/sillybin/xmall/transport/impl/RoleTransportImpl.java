@@ -58,4 +58,15 @@ public class RoleTransportImpl implements RoleTransport {
 	public Role getRoleByRoleCode(String roleCode) throws Exception {
 		return roleService.getRoleByRoleCode(roleCode);
 	}
+
+	/**
+	 ** 使用Ajax保存角色信息
+	 * @param role
+	 * @param statusId
+	 * @return boolean
+	 * @throws Exception
+	 */
+	public boolean saveOrUpdateRole(Role role, Long statusId) throws Exception {
+		return roleService.saveOrUpdateRole(role, statusId);
+	}
 }
